@@ -1,0 +1,30 @@
+INCLUDE(FindPkgConfig)
+PKG_CHECK_MODULES(PC_NEURAL_NETWORK neural_network)
+
+FIND_PATH(
+    NEURAL_NETWORK_INCLUDE_DIRS
+    NAMES neural_network/api.h
+    HINTS $ENV{NEURAL_NETWORK_DIR}/include
+        ${PC_NEURAL_NETWORK_INCLUDEDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/include
+          /usr/local/include
+          /usr/include
+)
+
+FIND_LIBRARY(
+    NEURAL_NETWORK_LIBRARIES
+    NAMES gnuradio-neural_network
+    HINTS $ENV{NEURAL_NETWORK_DIR}/lib
+        ${PC_NEURAL_NETWORK_LIBDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/lib
+          ${CMAKE_INSTALL_PREFIX}/lib64
+          /usr/local/lib
+          /usr/local/lib64
+          /usr/lib
+          /usr/lib64
+)
+
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(NEURAL_NETWORK DEFAULT_MSG NEURAL_NETWORK_LIBRARIES NEURAL_NETWORK_INCLUDE_DIRS)
+MARK_AS_ADVANCED(NEURAL_NETWORK_LIBRARIES NEURAL_NETWORK_INCLUDE_DIRS)
+
