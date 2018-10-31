@@ -22,6 +22,7 @@
 import numpy as np
 from gnuradio import gr
 from net import feed_forward
+import torch
 
 class nn_equilizer_ff(gr.sync_block):
     """
@@ -43,10 +44,10 @@ class nn_equilizer_ff(gr.sync_block):
         self.training_sequence = np.load('training_seq.npy')      # Will have to change it to something specific
         self.what_we_got = np.zeros(total_data)
         self.past_len_data = 10
-        self.model = feed_forward()
+        self.model = feed_forward(input=self.past_len_data, output=1)
         self.buffer = np.zeros(self.past_len_data)
         self.current_buffer = 0
-        self.opt = torch.optim.Adam(self.parameters(), lr=config['lr'])
+        self.opt = torch.optim.Adam(self.model.parameters(), lr=self.lr)
         self.loss = torch.nn.MSELoss()
         self.graph = []
         
@@ -108,20 +109,30 @@ class nn_equilizer_ff(gr.sync_block):
         in0 = input_items[0]
         out = output_items[0]
 
-        self.buffer[self.current_buffer] = in0
-        self.current_buffer = self.current_buffer%self.past_len_data
+        if in0.shape[0]>self.buffer.shape[0]:
+            self.buffer = in0[-self.buffer.shape[0]:]
+            self.current_buffer = 0
 
-        if self.current_count<self.total_data:
-            self.what_we_got[current_count] = in0
+        # self.buffer[self.current_buffer] = in0
+        # self.current_buffer = self.current_buffer%self.past_len_data
+
+        if self.current_count+in0.shape[0]<self.total_data:
+            self.what_we_got[self.current_count:self.current_count+in0.shape[0]] = in0
             out[:] = 0
-            self.current_count += 1
-        elif self.current_count == self.total_data:
+            self.current_count += in0.shape[0]
+        elif self.current_count+in0.shape[0] >= self.total_data:
+
+            self.what_we_got[self.current_count:] = in0[0:self.total_data - self.current_count]
+            out[:] = 0
+            self.current_count += self.total_data - self.current_count
+
             loss = self.train()
             self.model.test()
+            out[self.total_data - self.current_count:] = self.test(in0[self.total_data - self.current_count:])
             self.current_count += 1
-            out[:] = 0
         else:
-            out[:] = self.test()
+            out[:] = self.test(in0)
+
 
         return len(output_items[0])
 

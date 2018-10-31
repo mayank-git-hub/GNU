@@ -22,6 +22,7 @@
 from gnuradio import gr, gr_unittest
 from gnuradio import blocks
 from nn_equilizer_ff import nn_equilizer_ff
+import numpy as np
 
 class qa_nn_equilizer_ff (gr_unittest.TestCase):
 
@@ -32,10 +33,15 @@ class qa_nn_equilizer_ff (gr_unittest.TestCase):
         self.tb = None
 
     def test_001_t (self):
+
+        training_seq = np.load('training_seq.npy')
+        test_seq = np.random.normal(size=1000)
         # set up fg
-        testing_seq = np.vstack((np.load('training_seq.npy'), np.random.normal(size=1000)))
-        expected_output = something # think more about the testing_seq
-        src = blocks.vector_source_f(self.testing_seq)
+        # print(training_seq.shape)
+        testing_seq = np.concatenate((training_seq, test_seq), axis=0)
+        print('Printing: ', testing_seq.shape)
+        expected_output = test_seq # think more about the testing_seq
+        src = blocks.vector_source_f(testing_seq)
         nn_equi = nn_equilizer_ff(batch_size=100, learning_rate=0.0001, epochs=30, total_data=10000)
         snk = blocks.vector_sink_f()
         self.tb.connect (src, nn_equi)
@@ -43,9 +49,9 @@ class qa_nn_equilizer_ff (gr_unittest.TestCase):
         self.tb.run ()
         result_data = np.array(snk.data())
 
-        loss_training = np.mean(np.square(result_data[0:10000] - expected_output[0:10000]))
-        loss_testing = np.mean(np.square(result_data[10000:] - expected_output[10000:]))
-        print(loss_testing, loss_training)
+        # loss_training = np.mean(np.square(result_data[0:10000] - expected_output[0:10000]))
+        loss_testing = np.mean(np.square(result_data[10000:] - expected_output))
+        print(loss_testing)
         # check data
 
 
