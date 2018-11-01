@@ -1,0 +1,30 @@
+INCLUDE(FindPkgConfig)
+PKG_CHECK_MODULES(PC_EQUALIZER_DFE equalizer_dfe)
+
+FIND_PATH(
+    EQUALIZER_DFE_INCLUDE_DIRS
+    NAMES equalizer_dfe/api.h
+    HINTS $ENV{EQUALIZER_DFE_DIR}/include
+        ${PC_EQUALIZER_DFE_INCLUDEDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/include
+          /usr/local/include
+          /usr/include
+)
+
+FIND_LIBRARY(
+    EQUALIZER_DFE_LIBRARIES
+    NAMES gnuradio-equalizer_dfe
+    HINTS $ENV{EQUALIZER_DFE_DIR}/lib
+        ${PC_EQUALIZER_DFE_LIBDIR}
+    PATHS ${CMAKE_INSTALL_PREFIX}/lib
+          ${CMAKE_INSTALL_PREFIX}/lib64
+          /usr/local/lib
+          /usr/local/lib64
+          /usr/lib
+          /usr/lib64
+)
+
+INCLUDE(FindPackageHandleStandardArgs)
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(EQUALIZER_DFE DEFAULT_MSG EQUALIZER_DFE_LIBRARIES EQUALIZER_DFE_INCLUDE_DIRS)
+MARK_AS_ADVANCED(EQUALIZER_DFE_LIBRARIES EQUALIZER_DFE_INCLUDE_DIRS)
+

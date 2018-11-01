@@ -1,0 +1,7 @@
+/*!
+ * \defgroup block GNU Radio EQUALIZER_DFE C++ Signal Processing Blocks
+ * \brief All C++ blocks that can be used from the EQUALIZER_DFE GNU Radio
+ *        module are listed here or in the subcategories below.
+ *
+ */
+

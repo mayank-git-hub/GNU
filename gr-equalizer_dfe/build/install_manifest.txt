@@ -1,0 +1,9 @@
+/usr/local/lib/cmake/equalizer_dfe/equalizer_dfeConfig.cmake
+/usr/local/include/equalizer_dfe/api.h
+/usr/local/lib/python2.7/dist-packages/equalizer_dfe/__init__.py
+/usr/local/lib/python2.7/dist-packages/equalizer_dfe/dfe.py
+/usr/local/lib/python2.7/dist-packages/equalizer_dfe/__init__.pyc
+/usr/local/lib/python2.7/dist-packages/equalizer_dfe/dfe.pyc
+/usr/local/lib/python2.7/dist-packages/equalizer_dfe/__init__.pyo
+/usr/local/lib/python2.7/dist-packages/equalizer_dfe/dfe.pyo
+/usr/local/share/gnuradio/grc/blocks/equalizer_dfe_dfe.xml
