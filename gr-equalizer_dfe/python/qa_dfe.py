@@ -76,8 +76,8 @@ class qa_dfe (gr_unittest.TestCase):
 		self.tb.run ()
 		result_data = np.array(snk.data())
 
-		np.save('output', result_data)
-		np.save('true', expected)
+		# np.save('output', result_data)
+		# np.save('true', expected)
 
 		print(result_data[-100:], 'result_data')
 		print(expected[-100:], 'expected')

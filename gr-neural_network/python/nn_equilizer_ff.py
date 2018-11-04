@@ -23,38 +23,74 @@ import numpy as np
 from gnuradio import gr
 from net import feed_forward
 import torch
+from torch.autograd import Variable
 
 class nn_equilizer_ff(gr.sync_block):
     """
     docstring for block nn_equilizer_ff
     """
-    def __init__(self, batch_size, learning_rate, epochs, total_data):
+    def __init__(self, seed, num_taps, batch_size, learning_rate, epochs, train_size, training_path):
         gr.sync_block.__init__(self,
             name="nn_equilizer_ff",
             in_sig=[np.float32],
             out_sig=[np.float32])
 
-        #total_data = 10000
 
-        self.total_data = total_data
+        self.seed = seed
+        np.random.seed(seed)
+        torch.manual_seed(seed)
+        torch.cuda.manual_seed(seed)
+        self.training_path = training_path
+        self.current_count = 0
+        self.num_taps = num_taps
+        self.train_size = train_size
+        self.store_training = np.zeros([self.train_size])
+        self.get_expected() # TODO - What should be the true value?
+        self.buffer = np.zeros([self.num_taps - 1])
+        self.buffer_count = 0
+        self.buffer1 = np.zeros([self.num_taps])
+        self.buffer1_count = 0
         self.epochs = epochs
         self.batch_size = batch_size
         self.lr = learning_rate
-        self.current_count = 0
-        self.training_sequence = np.load('training_seq.npy')      # Will have to change it to something specific
-        self.what_we_got = np.zeros(total_data)
-        self.past_len_data = 10
-        self.model = feed_forward(input=self.past_len_data, output=1)
-        self.buffer = np.zeros(self.past_len_data)
-        self.current_buffer = 0
+        self.model = feed_forward(input=self.num_taps, output=1)
+        self.cuda = torch.cuda.is_available() and False
+        if self.cuda:
+            self.model = self.model.cuda()
+        
         self.opt = torch.optim.Adam(self.model.parameters(), lr=self.lr)
         self.loss = torch.nn.MSELoss()
         self.graph = []
+
+    def get_expected(self):
+
+        f = open(self.training_path, 'rb')
+        for i in f:
+            string_format = str([str(i)])
+        self.expected = np.array(string_format[2:-2].split('\\x0')[1:]).astype(np.float32)[0:self.train_size]
         
 
     def train(self):
 
-        idx = np.arange(self.total_data)[self.past_len_data:]
+        print('In training')
+
+        self.training_data = np.zeros([self.train_size-self.num_taps+1, self.num_taps])
+        self.training_label = np.zeros([self.train_size-self.num_taps+1])
+        
+        for i in range(self.num_taps-1, self.train_size):
+            self.training_data[i-self.num_taps+1] = self.store_training[i-self.num_taps+1:i+1]
+            self.training_label[i-self.num_taps+1] = self.expected[i]
+
+        self.idx_size = self.training_label.shape[0]
+
+        self.training_data = Variable(torch.FloatTensor(self.training_data))
+        self.training_label = Variable(torch.FloatTensor(self.training_label))
+
+        if self.cuda:
+            self.training_label = self.training_label.cuda()
+            self.training_data = self.training_data.cuda()
+
+
 
         self.model.train()
 
@@ -62,24 +98,16 @@ class nn_equilizer_ff(gr.sync_block):
 
         for epoch_i in range(self.epochs):
 
-            for no in range(self.total_data//self.batch_size):
+            for no in range(self.train_size//self.batch_size):
 
-                random_idx = np.random.choice(idx, self.batch_size, replace=False)
-
-                data = np.zeros([self.batch_size, self.past_len_data])
-
-                for i in range(data.shape[0]):
-                    data[i] = self.what_we_got[random_idx[i]-self.past_len_data:random_idx[i]]
-
-                target = self.training_sequence[random_idx]
-
-                data, target = Variable(torch.FloatTensor(data)), Variable(torch.FloatTensor(target)).unsqueeze(1)
-
-                if torch.cuda.is_available():
+                random_idx = torch.LongTensor(np.random.choice(self.idx_size, self.batch_size, replace=False)).cuda()
+                data, target = self.training_data[random_idx], self.training_label[random_idx]
+                
+                if self.cuda:
 
                     data, target = data.cuda(), target.cuda()
 
-                predicted = self.model(data)
+                predicted = self.model(data).squeeze()
 
                 loss = self.loss(predicted, target)
 
@@ -93,46 +121,53 @@ class nn_equilizer_ff(gr.sync_block):
 
         return np.sum(np.array(self.graph)*np.arange(len(self.graph)))/np.sum(np.arange(len(self.graph))) # return moving(weighted) average of the loss
 
-    def test(self):
+    def test(self, input):
         #Predicting the current input after seeing the buffer
 
-        data = Variable(torch.FloatTensor(np.vstack((self.buffer[self.current_buffer:], self.biffer[:self.current_buffer])))).unsqueeze(0)
-        if torch.cuda.is_available():
+        print('In testing')
+
+        test_input = np.zeros([input.shape[0], self.num_taps])
+        
+        for i in range(input.shape[0]):
+            if i - self.num_taps<0:
+                test_input[i][0:self.num_taps - 1 - i] = self.buffer[i:]
+                test_input[i][self.num_taps - 1 - i:] = input[0:i+1]
+            else:
+                test_input[i] = input[i-self.num_taps+1:i+1]
+
+        self.buffer = input[-self.num_taps+1:]
+
+        data = Variable(torch.FloatTensor(test_input))
+        if self.cuda:
             data = data.cuda()
 
-        predicted = self.model(data).data.cpu().numpy()[0]
+        to_send = self.model(data).squeeze().data.cpu().numpy()
 
-        return predicted    
+        for i in range(to_send.shape[0]):
+            if to_send[i] <0.5:
+                to_send[i] = 0 
+            else:
+                to_send[i] = 1
+
+        return to_send   
 
     def work(self, input_items, output_items):
-
+        
         in0 = input_items[0]
         out = output_items[0]
 
-        if in0.shape[0]>self.buffer.shape[0]:
-            self.buffer = in0[-self.buffer.shape[0]:]
-            self.current_buffer = 0
-
-        # self.buffer[self.current_buffer] = in0
-        # self.current_buffer = self.current_buffer%self.past_len_data
-
-        if self.current_count+in0.shape[0]<self.total_data:
-            self.what_we_got[self.current_count:self.current_count+in0.shape[0]] = in0
-            out[:] = 0
+        if self.current_count + in0.shape[0]>self.train_size and self.current_count<self.train_size:
+            self.store_training[self.current_count:] = in0[0:self.train_size - self.current_count]
+            self.train()
+            out[0:self.train_size - self.current_count] = 0
+            out[self.train_size - self.current_count:] = self.test(in0[self.train_size - self.current_count:])
             self.current_count += in0.shape[0]
-        elif self.current_count+in0.shape[0] >= self.total_data:
-
-            self.what_we_got[self.current_count:] = in0[0:self.total_data - self.current_count]
+        elif self.current_count + in0.shape[0]<self.train_size:
+            self.store_training[self.current_count:self.current_count+in0.shape[0]] = in0
+            self.current_count += in0.shape[0]
             out[:] = 0
-            self.current_count += self.total_data - self.current_count
-
-            loss = self.train()
-            self.model.test()
-            out[self.total_data - self.current_count:] = self.test(in0[self.total_data - self.current_count:])
-            self.current_count += 1
         else:
             out[:] = self.test(in0)
-
 
         return len(output_items[0])
 
