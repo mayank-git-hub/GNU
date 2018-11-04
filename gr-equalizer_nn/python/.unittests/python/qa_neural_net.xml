@@ -1,0 +1,12 @@
+<testsuite errors="1" failures="0" name="unittest.suite.TestSuite" tests="1" time="9.700">
+  <testcase classname="__main__.qa_neural_net" name="test_001_t" time="9.6998">
+    <error type="exceptions.AttributeError">'bool' object has no attribute 'astype'
+  File "/usr/lib/python2.7/unittest/case.py", line 329, in run
+    testMethod()
+  File "qa_neural_net.py", line 85, in test_001_t
+    print(np.mean((result_data[train_size:]==expected[train_size:]).astype(np.float32)), " Is the accuracy")
+    </error>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

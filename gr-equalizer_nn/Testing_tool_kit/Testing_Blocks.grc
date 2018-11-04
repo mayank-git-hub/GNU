@@ -128,7 +128,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(560, 376)</value>
+      <value>(536, 344)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -348,11 +348,11 @@
     </param>
     <param>
       <key>file</key>
-      <value>/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/Testing_tool_kit/training_output</value>
+      <value>/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_nn/Testing_tool_kit/training_output</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(1048, 372)</value>
+      <value>(1072, 372)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -395,7 +395,7 @@
     </param>
     <param>
       <key>file</key>
-      <value>/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/Testing_tool_kit/training</value>
+      <value>/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_nn/Testing_tool_kit/training</value>
     </param>
     <param>
       <key>_coordinate</key>
@@ -509,7 +509,7 @@
     </param>
   </block>
   <block>
-    <key>equalizer_dfe_dfe</key>
+    <key>equalizer_nn_neural_net</key>
     <param>
       <key>alias</key>
       <value></value>
@@ -524,11 +524,11 @@
     </param>
     <param>
       <key>_enabled</key>
-      <value>1</value>
+      <value>True</value>
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(664, 372)</value>
+      <value>(656, 340)</value>
     </param>
     <param>
       <key>_rotation</key>
@@ -536,7 +536,7 @@
     </param>
     <param>
       <key>id</key>
-      <value>equalizer_dfe_dfe_0</value>
+      <value>equalizer_nn_neural_net_0</value>
     </param>
     <param>
       <key>maxoutbuf</key>
@@ -547,8 +547,24 @@
       <value>0</value>
     </param>
     <param>
+      <key>batch_size</key>
+      <value>100</value>
+    </param>
+    <param>
+      <key>epochs</key>
+      <value>10</value>
+    </param>
+    <param>
+      <key>learning_rate</key>
+      <value>0.001</value>
+    </param>
+    <param>
       <key>num_taps</key>
       <value>10</value>
+    </param>
+    <param>
+      <key>seed</key>
+      <value>1</value>
     </param>
     <param>
       <key>train_size</key>
@@ -556,12 +572,12 @@
     </param>
     <param>
       <key>training_path</key>
-      <value>/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/Testing_tool_kit/training</value>
+      <value>/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_nn/Testing_tool_kit/training</value>
     </param>
   </block>
   <connection>
     <source_block_id>blocks_add_xx_0_0</source_block_id>
-    <sink_block_id>equalizer_dfe_dfe_0</sink_block_id>
+    <sink_block_id>equalizer_nn_neural_net_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -620,7 +636,7 @@
     <sink_key>0</sink_key>
   </connection>
   <connection>
-    <source_block_id>equalizer_dfe_dfe_0</source_block_id>
+    <source_block_id>equalizer_nn_neural_net_0</source_block_id>
     <sink_block_id>blocks_float_to_uchar_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>

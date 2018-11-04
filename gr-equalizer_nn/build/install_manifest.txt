@@ -1,0 +1,9 @@
+/usr/local/lib/cmake/equalizer_nn/equalizer_nnConfig.cmake
+/usr/local/include/equalizer_nn/api.h
+/usr/local/lib/python2.7/dist-packages/equalizer_nn/__init__.py
+/usr/local/lib/python2.7/dist-packages/equalizer_nn/neural_net.py
+/usr/local/lib/python2.7/dist-packages/equalizer_nn/__init__.pyc
+/usr/local/lib/python2.7/dist-packages/equalizer_nn/neural_net.pyc
+/usr/local/lib/python2.7/dist-packages/equalizer_nn/__init__.pyo
+/usr/local/lib/python2.7/dist-packages/equalizer_nn/neural_net.pyo
+/usr/local/share/gnuradio/grc/blocks/equalizer_nn_neural_net.xml

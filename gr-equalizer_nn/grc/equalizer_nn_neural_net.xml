@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<block>
+  <name>neural_net</name>
+  <key>equalizer_nn_neural_net</key>
+  <category>[equalizer_nn]</category>
+  <import>import equalizer_nn</import>
+  <make>equalizer_nn.neural_net($seed, $num_taps, $batch_size, $learning_rate, $epochs, $train_size, $training_path)</make>
+  <!-- Make one 'param' node for every Parameter you want settable from the GUI.
+       Sub-nodes:
+       * name
+       * key (makes the value accessible as $keyname, e.g. in the make node)
+       * type -->
+  <param>
+    <name>seed</name>
+    <key>seed</key>
+    <type>int</type>
+  </param>
+  <param>
+    <name>num_taps</name>
+    <key>num_taps</key>
+    <type>int</type>
+  </param>
+  <param>
+    <name>batch_size</name>
+    <key>batch_size</key>
+    <type>int</type>
+  </param>
+  <param>
+    <name>learning_rate</name>
+    <key>learning_rate</key>
+    <type>float</type>
+  </param>
+  <param>
+    <name>epochs</name>
+    <key>epochs</key>
+    <type>int</type>
+  </param>
+  <param>
+    <name>train_size</name>
+    <key>train_size</key>
+    <type>int</type>
+  </param>
+  <param>
+    <name>training_path</name>
+    <key>training_path</key>
+    <type>string</type>
+  </param>
+  <!-- Make one 'sink' node per input. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <sink>
+    <name>in</name>
+    <type>float</type>
+  </sink>
+
+  <!-- Make one 'source' node per output. Sub-nodes:
+       * name (an identifier for the GUI)
+       * type
+       * vlen
+       * optional (set to 1 for optional inputs) -->
+  <source>
+    <name>out</name>
+    <type>float</type>
+  </source>
+</block>
