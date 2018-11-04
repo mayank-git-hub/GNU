@@ -1,4 +1,4 @@
-# Install script for directory: /home/mayank/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/python
+# Install script for directory: /home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/python
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -32,19 +32,24 @@ if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
   set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+# Is this installation the result of a crosscompile?
+if(NOT DEFINED CMAKE_CROSSCOMPILING)
+  set(CMAKE_CROSSCOMPILING "FALSE")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages/equalizer_dfe" TYPE FILE FILES
-    "/home/mayank/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/python/__init__.py"
-    "/home/mayank/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/python/dfe.py"
+    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/python/__init__.py"
+    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/python/dfe.py"
     )
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages/equalizer_dfe" TYPE FILE FILES
-    "/home/mayank/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/__init__.pyc"
-    "/home/mayank/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/dfe.pyc"
-    "/home/mayank/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/__init__.pyo"
-    "/home/mayank/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/dfe.pyo"
+    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/__init__.pyc"
+    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/dfe.pyc"
+    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/__init__.pyo"
+    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/dfe.pyo"
     )
 endif()
 

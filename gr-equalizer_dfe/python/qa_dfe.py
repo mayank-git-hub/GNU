@@ -43,16 +43,16 @@ class qa_dfe (gr_unittest.TestCase):
 	def test_001_t (self):
 		# set up fg
 
-		self.training_path = '/home/mayank/Desktop/Study/Comm/Lab_comm/training'
+		self.training_path = '/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/Testing_tool_kit/training'
 		train_size = 10000
 		self.train_size = train_size
 		test_size = 5000
-		amplitude = [0.5, 0.25, 0.3, 1]
+		amplitude = [1, 1, 1, 1]
 
 		expected = self.get_expected()
-		test_expected = np.load('testing.npy')
+		# test_expected = np.load('testing.npy')
 
-		expected = np.concatenate((expected, test_expected), axis=0)
+		# expected = np.concatenate((expected, test_expected), axis=0)
 
 		one_shift = np.zeros([train_size+test_size])
 		one_shift[1:] = expected[:-1]
@@ -76,15 +76,11 @@ class qa_dfe (gr_unittest.TestCase):
 		self.tb.run ()
 		result_data = np.array(snk.data())
 
-		# print(result_data, expected)
-
-		# print(result_data)
-
 		np.save('output', result_data)
 		np.save('true', expected)
 
-		print(result_data[-10:], 'result_data')
-		print(expected[-10:], 'expected')
+		print(result_data[-100:], 'result_data')
+		print(expected[-100:], 'expected')
 		print(multipath_model[-10:], 'multipath_model')
 
 		print(np.mean((result_data[train_size:]==expected[train_size:]).astype(np.float32)), " Is the accuracy")

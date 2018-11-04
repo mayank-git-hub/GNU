@@ -40,7 +40,6 @@ class dfe(gr.sync_block):
 		self.weights1 = np.zeros([self.num_taps, 1])
 		self.store_training = np.zeros([self.train_size])
 		self.get_expected() # TODO - What should be the true value?
-		# self.expected = np.load('training.npy') # TODO - What should be the true value?
 		self.buffer = np.zeros([self.num_taps - 1])
 		self.buffer_count = 0
 		self.buffer1 = np.zeros([self.num_taps])
@@ -52,9 +51,7 @@ class dfe(gr.sync_block):
 		f = open(self.training_path, 'rb')
 		for i in f:
 			string_format = str([str(i)])
-
-		# list_ = string_format[3:-1].split('\\x0')
-		self.expected = np.array(string_format[2:-2].split('\\x0')[1:]).astype(np.float32)
+		self.expected = np.array(string_format[2:-2].split('\\x0')[1:]).astype(np.float32)[0:self.train_size]
 
 	def train(self):
 
@@ -72,10 +69,11 @@ class dfe(gr.sync_block):
 		if not self.lms:
 
 			self.training_label_feedback = (self.training_label - np.matmul(self.training_data, self.weights))[1:]
-			self.training_data = self.training_data[:-1]
+			self.training_data = np.zeros([self.train_size-self.num_taps, self.num_taps])
+			for i in range(self.num_taps, self.train_size):
+				self.training_data[i-self.num_taps] = self.expected[i - self.num_taps:i]
 
 			self.weights1 = np.matmul(np.matmul(np.linalg.inv(np.matmul(np.transpose(self.training_data), self.training_data)), np.transpose(self.training_data)), self.training_label_feedback)
-
 
 	def test(self, input):
 
@@ -143,6 +141,7 @@ class dfe(gr.sync_block):
 			self.train()
 			out[0:self.train_size - self.current_count] = 0
 			out[self.train_size - self.current_count:] = self.test(in0[self.train_size - self.current_count:])
+			self.current_count += in0.shape[0]
 		elif self.current_count + in0.shape[0]<self.train_size:
 			self.store_training[self.current_count:self.current_count+in0.shape[0]] = in0
 			self.current_count += in0.shape[0]
