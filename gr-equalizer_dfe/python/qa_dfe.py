@@ -37,22 +37,20 @@ class qa_dfe (gr_unittest.TestCase):
 		for i in f:
 			string_format = str([str(i)])
 
-		# list_ = string_format[3:-1].split('\\x0')
 		return np.array(string_format[2:-2].split('\\x0')[1:]).astype(np.float32)
 
 	def test_001_t (self):
 		# set up fg
 
-		self.training_path = '/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/Testing_tool_kit/training'
+		self.training_path = '/home/vaibhav/GNU/gr-equalizer_dfe/Testing_tool_kit/training'
 		train_size = 10000
 		self.train_size = train_size
 		test_size = 5000
 		amplitude = [1, 1, 1, 1]
 
 		expected = self.get_expected()
-		# test_expected = np.load('testing.npy')
 
-		# expected = np.concatenate((expected, test_expected), axis=0)
+		# Creating the multipath model
 
 		one_shift = np.zeros([train_size+test_size])
 		one_shift[1:] = expected[:-1]
@@ -75,9 +73,6 @@ class qa_dfe (gr_unittest.TestCase):
 		self.tb.connect (mult, snk)
 		self.tb.run ()
 		result_data = np.array(snk.data())
-
-		# np.save('output', result_data)
-		# np.save('true', expected)
 
 		print(result_data[-100:], 'result_data')
 		print(expected[-100:], 'expected')

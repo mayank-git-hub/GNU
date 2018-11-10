@@ -1,4 +1,4 @@
-# Install script for directory: /home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/include/equalizer_dfe
+# Install script for directory: /home/vaibhav/GNU/gr-equalizer_dfe/include/equalizer_dfe
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,6 +38,6 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/equalizer_dfe" TYPE FILE FILES "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/include/equalizer_dfe/api.h")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/equalizer_dfe" TYPE FILE FILES "/home/vaibhav/GNU/gr-equalizer_dfe/include/equalizer_dfe/api.h")
 endif()
 

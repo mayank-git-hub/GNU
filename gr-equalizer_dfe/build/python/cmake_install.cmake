@@ -1,4 +1,4 @@
-# Install script for directory: /home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/python
+# Install script for directory: /home/vaibhav/GNU/gr-equalizer_dfe/python
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,17 +39,17 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages/equalizer_dfe" TYPE FILE FILES
-    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/python/__init__.py"
-    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/python/dfe.py"
+    "/home/vaibhav/GNU/gr-equalizer_dfe/python/__init__.py"
+    "/home/vaibhav/GNU/gr-equalizer_dfe/python/dfe.py"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python2.7/dist-packages/equalizer_dfe" TYPE FILE FILES
-    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/__init__.pyc"
-    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/dfe.pyc"
-    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/__init__.pyo"
-    "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/dfe.pyo"
+    "/home/vaibhav/GNU/gr-equalizer_dfe/build/python/__init__.pyc"
+    "/home/vaibhav/GNU/gr-equalizer_dfe/build/python/dfe.pyc"
+    "/home/vaibhav/GNU/gr-equalizer_dfe/build/python/__init__.pyo"
+    "/home/vaibhav/GNU/gr-equalizer_dfe/build/python/dfe.pyo"
     )
 endif()
 
