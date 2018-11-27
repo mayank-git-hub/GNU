@@ -43,13 +43,17 @@ class qa_dfe (gr_unittest.TestCase):
 	def test_001_t (self):
 		# set up fg
 
-		self.training_path = '/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/Testing_tool_kit/training'
-		train_size = 10000
+		self.training_path = '/home/mayank/Desktop/GitRepos/GNU/gr-equalizer_dfe/Testing_tool_kit/training'
+		train_size = 4000
 		self.train_size = train_size
 		test_size = 5000
 		amplitude = [1, 1, 1, 1]
 
-		expected = self.get_expected()
+		expected = np.zeros([self.train_size+test_size])
+		expected_temp = self.get_expected()
+		expected[0:self.train_size] = expected_temp[0:self.train_size]
+		expected[self.train_size:] = expected_temp[10000:]
+		# print(expected.shape)
 		# test_expected = np.load('testing.npy')
 
 		# expected = np.concatenate((expected, test_expected), axis=0)
@@ -69,7 +73,7 @@ class qa_dfe (gr_unittest.TestCase):
 		multipath_model = expected + amplitude[0]*one_shift + amplitude[1]*two_shift + amplitude[2]*three_shift + amplitude[3]*four_shift
 
 		src = blocks.vector_source_f(multipath_model)
-		mult = dfe(num_taps=10, train_size=10000, training_path=self.training_path)
+		mult = dfe(num_taps=100, train_size=self.train_size, training_path=self.training_path)
 		snk = blocks.vector_sink_f()
 		self.tb.connect (src, mult)
 		self.tb.connect (mult, snk)
