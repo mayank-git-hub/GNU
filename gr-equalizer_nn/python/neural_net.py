@@ -27,13 +27,13 @@ import torch.nn as nn
 
 class feed_forward(nn.Module):
 
-    def __init__(self, input, output):
+    def __init__(self, input, output, hidden_nodes):
 
         super(feed_forward, self).__init__()
 
-        self.lin1 = nn.Linear(input, 30)
+        self.lin1 = nn.Linear(input, hidden_nodes)
         self.act1 = nn.ReLU()
-        self.lin2 = nn.Linear(30, output)
+        self.lin2 = nn.Linear(hidden_nodes, output)
 
 
     def forward(self, data):
@@ -48,7 +48,7 @@ class neural_net(gr.sync_block):
     """
     docstring for block neural_net
     """
-    def __init__(self, seed, num_taps, batch_size, learning_rate, epochs, train_size, training_path):
+    def __init__(self, seed, num_taps, batch_size, learning_rate, hidden_nodes, epochs, train_size, training_path):
         gr.sync_block.__init__(self,
             name="neural_net",
             in_sig=[np.float32],
@@ -56,6 +56,7 @@ class neural_net(gr.sync_block):
 
 
         self.seed = seed
+        self.hidden_nodes = hidden_nodes
         np.random.seed(seed)
         torch.manual_seed(seed)
         torch.cuda.manual_seed(seed)
@@ -72,7 +73,7 @@ class neural_net(gr.sync_block):
         self.epochs = epochs
         self.batch_size = batch_size
         self.lr = learning_rate
-        self.model = feed_forward(input=self.num_taps, output=1)
+        self.model = feed_forward(input=self.num_taps, output=1, hidden_nodes = self.hidden_nodes)
         self.cuda = torch.cuda.is_available() and False
         if self.cuda:
             self.model = self.model.cuda()
@@ -88,7 +89,6 @@ class neural_net(gr.sync_block):
             string_format = str([str(i)])
         self.expected = np.array(string_format[2:-2].split('\\x0')[1:]).astype(np.float32)[0:self.train_size]
         
-
     def train(self):
 
         print('In training')
@@ -108,8 +108,6 @@ class neural_net(gr.sync_block):
         if self.cuda:
             self.training_label = self.training_label.cuda()
             self.training_data = self.training_data.cuda()
-
-
 
         self.model.train()
 

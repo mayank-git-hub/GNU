@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Top Block
-# Generated: Mon Nov  5 01:52:39 2018
+# Generated: Tue Nov  6 00:22:12 2018
 ##################################################
 
 from distutils.version import StrictVersion
@@ -68,11 +68,11 @@ class top_block(gr.top_block, Qt.QWidget):
         ##################################################
         # Blocks
         ##################################################
-        self.equalizer_dfe_dfe_0 = equalizer_dfe.dfe(10, 10000, '/home/allai/Desktop/Study/Comm/Lab_comm/training')
+        self.equalizer_dfe_dfe_0 = equalizer_dfe.dfe(10, 10000, '/home/vaibhav/GNU/gr-equalizer_dfe/Testing_tool_kit/training')
         self.blocks_uchar_to_float_0 = blocks.uchar_to_float()
         self.blocks_float_to_uchar_0 = blocks.float_to_uchar()
-        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, '/home/allai/Desktop/Study/Comm/Lab_comm/training', False)
-        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, '/home/allai/Desktop/Study/Comm/Lab_comm/training_output', False)
+        self.blocks_file_source_0 = blocks.file_source(gr.sizeof_char*1, '/home/vaibhav/GNU/gr-equalizer_dfe/Testing_tool_kit/training', False)
+        self.blocks_file_sink_0 = blocks.file_sink(gr.sizeof_char*1, '/home/vaibhav/GNU/gr-equalizer_dfe/Testing_tool_kit/training_output', False)
         self.blocks_file_sink_0.set_unbuffered(False)
         self.blocks_delay_2 = blocks.delay(gr.sizeof_float*1, 3)
         self.blocks_delay_1 = blocks.delay(gr.sizeof_float*1, 1)

@@ -1,4 +1,4 @@
-# Install script for directory: /home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/lib
+# Install script for directory: /home/vaibhav/GNU/gr-equalizer_dfe/lib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

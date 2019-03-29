@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 <testsuite errors="0" failures="0" name="unittest.suite.TestSuite" tests="1" time="0.076">
   <testcase classname="__main__.qa_dfe" name="test_001_t" time="0.0764"></testcase>
+=======
+<testsuite errors="0" failures="0" name="unittest.suite.TestSuite" tests="1" time="0.243">
+  <testcase classname="__main__.qa_dfe" name="test_001_t" time="0.2430"></testcase>
+>>>>>>> ef1272cda8eef6b8994d0d433c9c0e34ab46aa37
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

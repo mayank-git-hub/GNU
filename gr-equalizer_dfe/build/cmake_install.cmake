@@ -1,4 +1,4 @@
-# Install script for directory: /home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe
+# Install script for directory: /home/vaibhav/GNU/gr-equalizer_dfe
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,18 +38,18 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/equalizer_dfe" TYPE FILE FILES "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/cmake/Modules/equalizer_dfeConfig.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/equalizer_dfe" TYPE FILE FILES "/home/vaibhav/GNU/gr-equalizer_dfe/cmake/Modules/equalizer_dfeConfig.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/include/equalizer_dfe/cmake_install.cmake")
-  include("/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/lib/cmake_install.cmake")
-  include("/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/swig/cmake_install.cmake")
-  include("/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/python/cmake_install.cmake")
-  include("/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/grc/cmake_install.cmake")
-  include("/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/apps/cmake_install.cmake")
-  include("/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/docs/cmake_install.cmake")
+  include("/home/vaibhav/GNU/gr-equalizer_dfe/build/include/equalizer_dfe/cmake_install.cmake")
+  include("/home/vaibhav/GNU/gr-equalizer_dfe/build/lib/cmake_install.cmake")
+  include("/home/vaibhav/GNU/gr-equalizer_dfe/build/swig/cmake_install.cmake")
+  include("/home/vaibhav/GNU/gr-equalizer_dfe/build/python/cmake_install.cmake")
+  include("/home/vaibhav/GNU/gr-equalizer_dfe/build/grc/cmake_install.cmake")
+  include("/home/vaibhav/GNU/gr-equalizer_dfe/build/apps/cmake_install.cmake")
+  include("/home/vaibhav/GNU/gr-equalizer_dfe/build/docs/cmake_install.cmake")
 
 endif()
 
@@ -61,5 +61,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/allai/Desktop/Study/Comm/Lab_comm/Project/gr-equalizer_dfe/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/vaibhav/GNU/gr-equalizer_dfe/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
